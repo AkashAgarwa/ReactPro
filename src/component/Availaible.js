@@ -1,13 +1,20 @@
 import CreateIcon from "./CreateIcon";
 import './Availaible.css'
 import Safe from "./Safe";
+import { useDispatch, useSelector } from "react-redux";
+import {useEffect} from 'react'
 function Availaible(props) {
-
-const data=props.data;
-const listItems = data.map((data1,index) =><li  key={data1.safeId}>
-    <Safe value={data1} selected={props.selected}/>
+let data=useSelector(state => state.safe);
+const searchData=useSelector(state=>state.search)
+console.log()
+if( (searchData) && (Object.keys(data).length!==0))
+{
+  data= data.filter(data1=>data1.safeName.includes(searchData));
+} 
+const listItems =data.map((data1,index) =><li  key={data1.safeId}>
+    <Safe value={data1}/>
 </li>
-);
+) 
 return (  
     
     <div className="availaibleMainTab">
@@ -18,7 +25,7 @@ return (
     </ul>
 </div>
 
-    <div className="iconBox"><CreateIcon  handleAdd={props.handleAdd} safeId={props.safeId} /></div>
+    <div className="iconBox"><CreateIcon/></div>
     </div>);
 }
 
